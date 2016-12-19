@@ -24,7 +24,7 @@ public class CalculateExpression {
         for(int i = 0;i<strs.length;i++){
             if(isOperator(strs[i]) == 0){           //如果是数字,则向栈中添加
                 if(isIdentifier(strs[i])) {                              //如果是变量标识符
-                    Identifier identifier = Context.getIden(Context.indexOfScope + "@" +strs[i]);           //作用域+"@"+变量名 来获得变量
+                    Identifier identifier = Context.getIden(Context.indexOfScope + "@" +strs[i].split("\\]")[0]);           //作用域+"@"+变量名 来获得变量
                     if(identifier != null){
                         //如果是数组
                         if(identifier.name.indexOf("[") >= 0){

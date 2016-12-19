@@ -1,7 +1,5 @@
-package tokenanalysis.common;
+package commom;
 
-import tokenanalysis.common.IdenType;
-import tokenanalysis.common.Identifier;
 
 import java.util.*;
 

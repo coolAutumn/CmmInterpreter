@@ -1,4 +1,4 @@
-package tokenanalysis.common;
+package commom;
 
 /**
  * Created by LeeAutumn on 19/12/2016.

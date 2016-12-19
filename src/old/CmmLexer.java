@@ -1,6 +1,6 @@
 // Generated from /Users/coolautumn/Documents/Compile_File/JAVA_IntelliJ/CmmInterpreter/resources/CmmLexer.g4 by ANTLR 4.5.3
 
-    package tokenanalysis.old;
+    package old;
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -84,7 +84,7 @@ public class CmmLexer extends Lexer {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "tokenanalysis/old/CmmLexer.g4"; }
+	public String getGrammarFileName() { return "old/CmmLexer.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }

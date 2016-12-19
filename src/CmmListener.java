@@ -1,7 +1,5 @@
 // Generated from /Users/coolautumn/Documents/Compile_File/JAVA_IntelliJ/CmmInterpreter/resources/Cmm.g4 by ANTLR 4.5.3
 
-    package tokenanalysis;
-
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**

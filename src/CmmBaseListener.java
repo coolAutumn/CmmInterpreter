@@ -1,18 +1,16 @@
 // Generated from /Users/coolautumn/Documents/Compile_File/JAVA_IntelliJ/CmmInterpreter/resources/Cmm.g4 by ANTLR 4.5.3
 
-    package tokenanalysis;
-
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.omg.PortableInterceptor.INACTIVE;
-import tokenanalysis.common.CalculateExpression;
-import tokenanalysis.common.Context;
-import tokenanalysis.common.IdenType;
-import tokenanalysis.common.Identifier;
-import tokenanalysis.exceptions.RepeatIdenDeclException;
-import tokenanalysis.exceptions.UndefinedVarException;
+import commom.CalculateExpression;
+import commom.Context;
+import commom.IdenType;
+import commom.Identifier;
+import exceptions.RepeatIdenDeclException;
+import exceptions.UndefinedVarException;
+
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
-package tokenanalysis.exceptions;
+package exceptions;
 
-import tokenanalysis.common.Context;
+import commom.Context;
 
 /**
  * Created by LeeAutumn on 19/12/2016.

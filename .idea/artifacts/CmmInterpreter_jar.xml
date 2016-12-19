@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="CmmInterpreter:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CmmInterpreter_jar</output-path>
+    <root id="archive" name="CmmInterpreter.jar">
+      <element id="module-output" name="CmmInterpreter" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../JAVALibrary/antlr/antlr.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

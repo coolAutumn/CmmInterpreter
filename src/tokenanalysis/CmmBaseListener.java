@@ -191,7 +191,7 @@ public class CmmBaseListener implements CmmListener {
 
 			//根据是否是数组来进行赋值
 			if(identifier.type.equals(IdenType.FARRAY) || identifier.type.equals(IdenType.IARRAY)){
-				String index = idenname.substring(identifier.name.indexOf("[")+1,identifier.name.indexOf("]"));
+				String index = idenname.substring(idenname.indexOf("[")+1,idenname.indexOf("]"));
 
 				rangeCheck(identifier,Integer.valueOf(index));
 
@@ -236,12 +236,12 @@ public class CmmBaseListener implements CmmListener {
 
 			//根据是否是数组来进行赋值
 			if(identifier.type.equals(IdenType.FARRAY)){
-				String index = idenname.substring(identifier.name.indexOf("[")+1,identifier.name.indexOf("]"));
+				String index = idenname.substring(idenname.indexOf("[")+1,idenname.indexOf("]"));
 
 				rangeCheck(identifier,Integer.valueOf(index));
 				System.out.println( ((List<Double>)identifier.value).get(Integer.valueOf(index)));
 			}else if(identifier.type.equals(IdenType.IARRAY)){
-				String index = idenname.substring(identifier.name.indexOf("[")+1,identifier.name.indexOf("]"));
+				String index = idenname.substring(idenname.indexOf("[")+1,idenname.indexOf("]"));
 
 				rangeCheck(identifier,Integer.valueOf(index));
 				System.out.println((int)(double)((List<Double>)identifier.value).get(Integer.valueOf(index)));
@@ -292,7 +292,7 @@ public class CmmBaseListener implements CmmListener {
 
 			//根据是否是数组来进行赋值
 			if(identifier.type.equals(IdenType.FARRAY) || identifier.type.equals(IdenType.IARRAY)){
-				String index = idenname.substring(identifier.name.indexOf("[")+1,identifier.name.indexOf("]"));
+				String index = idenname.substring(idenname.indexOf("[")+1,idenname.indexOf("]"));
 
 				rangeCheck(identifier, Integer.valueOf(index));
 				((List<Double>)identifier.value).set(Integer.valueOf(index),value);
@@ -390,7 +390,7 @@ public class CmmBaseListener implements CmmListener {
 
 	//数组越界检查
 	public void rangeCheck(Identifier identifier, int index){
-		if(index > (List<Double>)identifier.size()){
+		if(index > ((List<Double>)identifier.value).size()){
 			try{
 				throw new ArrayIndexOutOfBoundsException();
 			}catch (ArrayIndexOutOfBoundsException e){

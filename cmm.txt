@@ -10,6 +10,7 @@
  */
 
 int a ;
+
 while(a != 0)
 {
 	int j;
@@ -28,7 +29,7 @@ while(a != 0)
 		write(a);
 		}
 	a = a -1;
-
+}
 /*output:
 4
 1

@@ -159,7 +159,7 @@ public class Interpreter {
         CmmParser cmmParser = new CmmParser(tokens);
         ParseTree parseTree = cmmParser.prog();
 
-//        System.out.println(parseTree.toStringTree(cmmParser));
+        System.out.println(parseTree.toStringTree(cmmParser));
 
         CmmBaseVisitor cmmBaseVisitor = new CmmBaseVisitor();
         cmmBaseVisitor.visit(parseTree);

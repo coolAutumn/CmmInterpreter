@@ -9,6 +9,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import tokenanalysis.common.Context;
 import tokenanalysis.common.IdenType;
 import tokenanalysis.common.Identifier;
+import tokenanalysis.exceptions.RepeatIdenDeclException;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class CmmBaseListener implements CmmListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitProg(CmmParser.ProgContext ctx) {
-		System.out.println("Program exit!");
+//		System.out.println("Program exit!");
 	}
 	/**
 	 * {@inheritDoc}
@@ -59,6 +60,17 @@ public class CmmBaseListener implements CmmListener {
 		IdenType idenType = type.equals("int") ? IdenType.INTEGER : IdenType.FLOAT;
 
 		for(String s : Context.varToBeIdentify){
+
+			//先判断是否重复声明了
+			try {
+				if(Context.values.containsKey(Context.indexOfScope+"@"+s)){
+					throw  new RepeatIdenDeclException();
+				}
+			}catch (RepeatIdenDeclException e){
+				System.err.println("Declaration "+s+" :"+e);
+				System.exit(-1);
+			}
+
 			//判断是数组还是什么
 			if(s.indexOf("[") >= 0){
 				String index = s.substring(s.indexOf("[")+1,s.indexOf("]"));
@@ -68,7 +80,8 @@ public class CmmBaseListener implements CmmListener {
 				Context.values.put(Context.indexOfScope+"@"+s, new Identifier(Context.indexOfScope+"@"+s,Double.valueOf("0"),idenType));
 			}
 		}
-	}
+
+	}		//--over
 	/**
 	 * {@inheritDoc}
 	 *
@@ -77,7 +90,7 @@ public class CmmBaseListener implements CmmListener {
 	@Override public void exitVarDecl(CmmParser.VarDeclContext ctx) {
 		//清除list
 		Context.varToBeIdentify.clear();
-	}
+	}		//--over
 	/**
 	 * {@inheritDoc}
 	 *
@@ -100,7 +113,7 @@ public class CmmBaseListener implements CmmListener {
 		for( String s : idens){
 			Context.varToBeIdentify.add(s);
 		}
-	}
+	}		//--over
 	/**
 	 * {@inheritDoc}
 	 *

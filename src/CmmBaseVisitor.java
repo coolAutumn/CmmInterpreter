@@ -142,17 +142,37 @@ public class CmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Cm
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitIfStmt(CmmParser.IfStmtContext ctx) {
-		System.out.println("作用域切换至"+ (++Context.indexOfScope));
+		String s = ctx.getText();
+		String text = ctx.exprStmt().getText();
+		String prog = ctx.prog(0).getText();
+		if (ctx.prog(1) != null) {
+			//说明有else
+			if (getBoolState(text)) {
+				System.out.println("作用域切换至" + (++Context.indexOfScope));
+				visitProg(ctx.prog(0));
+				//当退出if时,还原作用域
+				deleteIdenInCurrentScope();
+				System.out.println("作用域切换至" + (--Context.indexOfScope));
+				return null;
+			} else {
+				System.out.println("作用域切换至" + (++Context.indexOfScope));
+				visitProg(ctx.prog(1));
+				//当退出if时,还原作用域
+				deleteIdenInCurrentScope();
+				System.out.println("作用域切换至" + (--Context.indexOfScope));
+			}
+		} else {
+			//只有一项
+			if (getBoolState(text)) {
+				System.out.println("作用域切换至" + (++Context.indexOfScope));
+				visitProg(ctx.prog(0));
+				//当退出if时,还原作用域
+				deleteIdenInCurrentScope();
+				System.out.println("作用域切换至" + (--Context.indexOfScope));
+			}
 
-		visitExprStmt(ctx.exprStmt());
-
-		visitProg(ctx.prog(0));
-
-		//当退出if时,还原作用域
-		deleteIdenInCurrentScope();
-		System.out.println("作用域切换至"+ (--Context.indexOfScope));
-
-		return visitChildren(ctx);
+		}
+		return null;
 	}
 
 

@@ -495,7 +495,12 @@ public class CmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Cm
 			return resultLeft < resultright;
 //			System.out.println(number_left + "==" + number_right);
 		}
-
+		if (state.equals("true")) {
+			return true;
+		}
+		if (state.equals("false")) {
+			return false;
+		}
 		System.err.println(state + "有误! ,情监测");
 		return false;
 	}

@@ -442,21 +442,26 @@ public class CmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Cm
 			number_right = state.substring(state.indexOf("==") + 2);
 			Double resultLeft = CalculateExpression.calexpression(number_left);
 			Double resultright = CalculateExpression.calexpression(number_right);
-
-			return resultLeft == resultright;
+//			System.out.println("left : " + resultLeft);
+//			System.out.println("right : " + resultright);
+//			System.out.println(resultLeft == resultright);
+			return resultLeft.equals(resultright);
 //			System.out.println(number_left + "==" + number_right);
 		}
 		if (state.contains("!=")) {
-			// 说明是 ==
+			// 说明是 !=
 			number_left = state.substring(0, state.indexOf("!="));
 			number_right = state.substring(state.indexOf("!=") + 2);
 			Double resultLeft = CalculateExpression.calexpression(number_left);
 			Double resultright = CalculateExpression.calexpression(number_right);
-			return resultLeft != resultright;
+//			System.out.println("left : " + resultLeft);
+//			System.out.println("right : " + resultright);
+//			System.out.println(resultLeft != resultright);
+			return !resultLeft.equals(resultright);
 //			System.out.println(number_left + "==" + number_right);
 		}
 		if (state.contains(">=")) {
-			// 说明是 ==
+			// 说明是 >=
 			number_left = state.substring(0, state.indexOf(">="));
 			number_right = state.substring(state.indexOf(">=") + 2);
 			Double resultLeft = CalculateExpression.calexpression(number_left);
@@ -465,7 +470,7 @@ public class CmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Cm
 //			System.out.println(number_left + "==" + number_right);
 		}
 		if (state.contains("<=")) {
-			// 说明是 ==
+			// 说明是 <=
 			number_left = state.substring(0, state.indexOf("<="));
 			number_right = state.substring(state.indexOf("<=") + 2);
 			Double resultLeft = CalculateExpression.calexpression(number_left);
@@ -474,7 +479,7 @@ public class CmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Cm
 //			System.out.println(number_left + "==" + number_right);
 		}
 		if (state.contains(">")) {
-			// 说明是 ==
+			// 说明是 >
 			number_left = state.substring(0, state.indexOf(">"));
 			number_right = state.substring(state.indexOf(">") + 1);
 			Double resultLeft = CalculateExpression.calexpression(number_left);
@@ -483,7 +488,7 @@ public class CmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Cm
 //			System.out.println(number_left + "==" + number_right);
 		}
 		if (state.contains("<")) {
-			// 说明是 ==
+			// 说明是 <
 			number_left = state.substring(0, state.indexOf("<"));
 			number_right = state.substring(state.indexOf("<") + 1);
 //			System.out.println("chushi : " + number_left);

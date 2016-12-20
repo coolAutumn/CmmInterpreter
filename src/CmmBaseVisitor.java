@@ -98,7 +98,7 @@ public class CmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Cm
 
 
 		//在结束了变量声明之后,清除用于暂时保存变量名的arraylist
-		System.out.println(Context.values.entrySet());
+//		System.out.println(Context.values.entrySet());
 //		Context.varToBeIdentify.clear();
 
 		return visitChildren(ctx);
@@ -163,15 +163,27 @@ public class CmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Cm
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitWhileStmt(CmmParser.WhileStmtContext ctx) {
-		System.out.println("作用域切换至"+ (++Context.indexOfScope));
 
-		visitExprStmt(ctx.exprStmt());
+		String s = ctx.getText();
+		String text = ctx.exprStmt().getText();
+		String prog = ctx.prog().getText();
+//		System.out.println("##################");
+//		System.out.println(s);
+//		System.out.println(text);
+//		System.out.println(prog);
+//		System.out.println("##################");
+		//visitExprStmt(ctx.exprStmt());
+		while (getBoolState(text)) {
+			System.out.println("作用域切换至" + (++Context.indexOfScope));
 
-		//当退出while时,还原作用域
-		deleteIdenInCurrentScope();
-		System.out.println("作用域切换至"+ (--Context.indexOfScope));
+			visitProg(ctx.prog());
 
-		return visitChildren(ctx);
+			//当退出while时,还原作用域
+			deleteIdenInCurrentScope();
+			System.out.println("作用域切换至" + (--Context.indexOfScope));
+		}
+
+		return null;
 	}
 
 
@@ -242,9 +254,10 @@ public class CmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Cm
 			realname = idenname;
 		}
 
-		if(Context.getIden(Context.indexOfScope+"@"+realname) != null){
-			//得到储存好的变量
-			Identifier identifier = Context.getIden(Context.indexOfScope+"@"+realname);
+		//得到储存好的变量
+		Identifier identifier = Context.getIden(Context.indexOfScope+"@"+realname);
+
+		if(identifier != null){
 
 			//根据是否是数组来进行赋值
 			if(identifier.type.equals(IdenType.FARRAY)){
@@ -294,10 +307,12 @@ public class CmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Cm
 			realname = idenname;
 		}
 
-		if(Context.getIden(Context.indexOfScope+"@"+realname) != null){
+		//得到储存好的变量
+		Identifier identifier = Context.getIden(Context.indexOfScope+"@"+realname);
 
-			//得到储存好的变量
-			Identifier identifier = Context.getIden(Context.indexOfScope+"@"+realname);
+
+		if(identifier != null){
+
 			double v = CalculateExpression.calexpression(expr);
 			double value = identifier.type.equals(IdenType.INTEGER) || identifier.type.equals(IdenType.IARRAY) ? (int)v : v;
 
@@ -368,7 +383,7 @@ public class CmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Cm
 		int scope = Context.indexOfScope;
 
 		for(Map.Entry<String,Identifier> entry : Context.values.entrySet()){
-			if(entry.getKey().charAt(0) == (char)Context.indexOfScope){
+			if(entry.getKey().indexOf(String.valueOf(Context.indexOfScope)) >= 0 ){
 				Context.values.remove(entry.getKey());
 			}
 		}
@@ -384,5 +399,84 @@ public class CmmBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements Cm
 				System.err.println(index + " is out of range of Array "+identifier.name);
 			}
 		}
+	}
+
+	/**
+	 * 根据传进来的式子 来测试正误
+	 *
+	 * @param state
+	 * @return
+	 */
+	public boolean getBoolState(String state) {
+//		System.out.println("#######################");
+//		System.out.println(state);
+//		System.out.println("#######################");
+		String number_left;
+		String number_right;
+		//等号 == != <= >= > <
+		//首先去掉语句中所有的空格
+		state = state.replaceAll(" ", "");
+		if (state.contains("==")) {
+			// 说明是 ==
+			number_left = state.substring(0, state.indexOf("=="));
+			number_right = state.substring(state.indexOf("==") + 2);
+			Double resultLeft = CalculateExpression.calexpression(number_left);
+			Double resultright = CalculateExpression.calexpression(number_right);
+
+			return resultLeft == resultright;
+//			System.out.println(number_left + "==" + number_right);
+		}
+		if (state.contains("!=")) {
+			// 说明是 ==
+			number_left = state.substring(0, state.indexOf("!="));
+			number_right = state.substring(state.indexOf("!=") + 2);
+			Double resultLeft = CalculateExpression.calexpression(number_left);
+			Double resultright = CalculateExpression.calexpression(number_right);
+			return resultLeft != resultright;
+//			System.out.println(number_left + "==" + number_right);
+		}
+		if (state.contains(">=")) {
+			// 说明是 ==
+			number_left = state.substring(0, state.indexOf(">="));
+			number_right = state.substring(state.indexOf(">=") + 2);
+			Double resultLeft = CalculateExpression.calexpression(number_left);
+			Double resultright = CalculateExpression.calexpression(number_right);
+			return resultLeft >= resultright;
+//			System.out.println(number_left + "==" + number_right);
+		}
+		if (state.contains("<=")) {
+			// 说明是 ==
+			number_left = state.substring(0, state.indexOf("<="));
+			number_right = state.substring(state.indexOf("<=") + 2);
+			Double resultLeft = CalculateExpression.calexpression(number_left);
+			Double resultright = CalculateExpression.calexpression(number_right);
+			return resultLeft <= resultright;
+//			System.out.println(number_left + "==" + number_right);
+		}
+		if (state.contains(">")) {
+			// 说明是 ==
+			number_left = state.substring(0, state.indexOf(">"));
+			number_right = state.substring(state.indexOf(">") + 1);
+			Double resultLeft = CalculateExpression.calexpression(number_left);
+			Double resultright = CalculateExpression.calexpression(number_right);
+			return resultLeft > resultright;
+//			System.out.println(number_left + "==" + number_right);
+		}
+		if (state.contains("<")) {
+			// 说明是 ==
+			number_left = state.substring(0, state.indexOf("<"));
+			number_right = state.substring(state.indexOf("<") + 1);
+//			System.out.println("chushi : " + number_left);
+//			System.out.println("chushi : " + number_right);
+			Double resultLeft = CalculateExpression.calexpression(number_left);
+			Double resultright = CalculateExpression.calexpression(number_right);
+//			System.out.println("结果 :" + resultLeft);
+//			System.out.println("结果 :" + resultright);
+			return resultLeft < resultright;
+//			System.out.println(number_left + "==" + number_right);
+		}
+
+		System.err.println(state + "有误! ,情监测");
+		return false;
 	}
 }

@@ -9,10 +9,29 @@
  * 3.IF-ELSE 与 WHILE 混合 嵌套
  */
 
-int a;
-a=10;
+double a;
+double b;
+a=10.1;
+write(a);
+a = a + 100;
+write(a);
+a = 100 +200*4;
+b = a / 3;
+write(b);
+a = 12.1;
+while(a <15){
+    int b;
+    b = a+1;
+    write(b);
+    a = a + 1;
+}
+
+write(b);
+
+/*
 while(a != 0)
 {
+    write(a);
 	int j;
 	while(1 == 2)
 	{
@@ -30,6 +49,7 @@ while(a != 0)
 		}
 	a = a -1;
 }
+*/
 /*output:
 4
 1

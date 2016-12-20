@@ -19,6 +19,7 @@ public class Context {
     public static int indexOfScope = 0;
 
 
+    //获得最近作用域的变量
     public static Identifier getIden(String idenname){
         int scope = Integer.valueOf(idenname.split("@")[0]);
         String realname = idenname.split("@")[1];

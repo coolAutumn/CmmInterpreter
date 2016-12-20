@@ -9,7 +9,8 @@
  * 3.IF-ELSE 与 WHILE 混合 嵌套
  */
 
-int a ;
+int a;
+a=10;
 while(a != 0)
 {
 	int j;

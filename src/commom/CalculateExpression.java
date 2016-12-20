@@ -1,5 +1,7 @@
 package commom;
 
+import exceptions.UndefinedVarException;
+
 import java.util.List;
 import java.util.Stack;
 
@@ -16,13 +18,18 @@ public class CalculateExpression {
      */
     public static Double calexpression(String expressionStmt){
         String[] strs = InfixToSuffix.transer(expressionStmt);
+//        for(String s :strs){
+//            System.out.print(s+" ");
+//         }
 
         Stack<Double> stack = new Stack<>();
 
         for(int i = 0;i<strs.length;i++){
             if(isOperator(strs[i]) == 0){           //如果是数字,则向栈中添加
                 if(isIdentifier(strs[i])) {                              //如果是变量标识符
-                    Identifier identifier = Context.getIden(Context.indexOfScope + "@" +strs[i].split("\\]")[0]);           //作用域+"@"+变量名 来获得变量
+                    String realname = strs[i].indexOf("[") < 0 ? Context.indexOfScope + "@" +strs[i] : Context.indexOfScope + "@" +strs[i].substring(0,strs[i].indexOf("[")+1);
+
+                    Identifier identifier = Context.getIden(realname);           //作用域+"@"+变量名 来获得变量
                     if(identifier != null){
                         //如果是数组
                         if(identifier.name.indexOf("[") >= 0){
@@ -35,8 +42,12 @@ public class CalculateExpression {
                             stack.push((Double)identifier.value);
                         }
                     }else{
-                        System.out.println("ERROR: Identifier named "+strs[i]+"haven't been initilized");
-                        System.exit(0);
+                        try {
+                            throw new UndefinedVarException();
+                        }catch (UndefinedVarException e){
+                            System.err.println(identifier.name + "Undefined Identifier in scope "+Context.indexOfScope);
+                            System.err.println(e);
+                        }
                     }
                 }else{                              //是数字直接向栈中添加
                     stack.push(Double.valueOf(strs[i]));
